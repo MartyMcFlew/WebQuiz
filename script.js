@@ -111,7 +111,6 @@ function showScore() {
   imageElement.src = 'images/beach.jpg';
 
   // show each question and if it was correct or not
-  // show each question and if it was correct or not
   questions.forEach((question, index) => {
     const questionNo = index + 1;
     const questionSection = document.createElement('div');
@@ -128,7 +127,6 @@ function showScore() {
     questionSection.style.padding = '8px';
     questionSection.style.border = '1px solid black';
     questionSection.style.borderRadius = '4px';
-    // questionSection.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
     questionSection.style.backgroundColor = '#fff';
     questionSection.style.width = '100%';
     questionSection.style.marginLeft = '0';
