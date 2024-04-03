@@ -54,7 +54,7 @@ function startQuiz() {
   showQuestion(questions[currentQuestionIndex]);
 }
 
-function showQuestion(question) {
+function showQuestion() {
   resetState();
   const currentQuestion = questions[currentQuestionIndex];
   const questionNo = currentQuestionIndex + 1;
@@ -99,6 +99,8 @@ function selectAnswer(e) {
     }
     button.disabled = true;
   });
+  // Store the selected answer in the questions array
+  questions[currentQuestionIndex].selectedAnswer = selectedBtn.innerText;
   nextButton.style.display = 'block';
 }
 
@@ -107,6 +109,32 @@ function showScore() {
   questionElement.innerText = `Your score is ${score} out of ${questions.length}!`;
   nextButton.style.display = 'block';
   imageElement.src = 'images/beach.jpg';
+
+  // show each question and if it was correct or not
+  // show each question and if it was correct or not
+  questions.forEach((question, index) => {
+    const questionNo = index + 1;
+    const questionSection = document.createElement('div');
+    const correctAnswer = question.answers.find((answer) => answer.correct);
+    questionSection.innerText = `${questionNo}. ${question.question} (Correct answer: ${correctAnswer.text})`;
+    if (question.selectedAnswer === correctAnswer.text) {
+      questionSection.style.color = 'green';
+    } else {
+      questionSection.style.color = 'red';
+    }
+    questionSection.style.marginBottom = '10px';
+    questionSection.style.fontWeight = '500';
+    questionSection.style.fontSize = '14px';
+    questionSection.style.padding = '8px';
+    questionSection.style.border = '1px solid black';
+    questionSection.style.borderRadius = '4px';
+    // questionSection.style.backgroundColor = 'rgba(0, 0, 0, 0.1)';
+    questionSection.style.backgroundColor = '#fff';
+    questionSection.style.width = '100%';
+    questionSection.style.marginLeft = '0';
+    questionSection.style.marginTop = '10px';
+    answerButtons.appendChild(questionSection);
+  });
 }
 
 function handleNextButton() {
