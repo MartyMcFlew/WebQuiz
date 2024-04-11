@@ -3,7 +3,8 @@
 const questions = [
   {
     question: 'What is the capital of France?',
-    image: 'images/paris.jpg',
+    // image: 'images/paris.jpg',
+    video: 'videos/paris.mp4',
     answers: [
       { text: 'New York', correct: false },
       { text: 'Paris', correct: true },
@@ -41,6 +42,7 @@ const questions = [
 
 const questionElement = document.getElementById('question');
 const imageElement = document.getElementById('question-image');
+const videoElement = document.getElementById('question-video');
 const answerButtons = document.getElementById('answer-buttons');
 const nextButton = document.getElementById('next-btn');
 
@@ -60,7 +62,17 @@ function showQuestion() {
   const questionNo = currentQuestionIndex + 1;
   questionElement.innerText = `${questionNo}. ${currentQuestion.question}`; // innerHtml?
 
-  imageElement.src = currentQuestion.image;
+  if (currentQuestion.video) {
+    videoElement.src = currentQuestion.video;
+    videoElement.style.display = 'block';
+    imageElement.style.display = 'none';
+    videoElement.muted = true;
+    videoElement.play();
+  } else {
+    imageElement.src = currentQuestion.image;
+    imageElement.style.display = 'block';
+    videoElement.style.display = 'none';
+  }
 
   // randomize order of answer buttons
   currentQuestion.answers.sort(() => Math.random() - 0.5);
@@ -82,11 +94,15 @@ function resetState() {
   while (answerButtons.firstChild) {
     answerButtons.removeChild(answerButtons.firstChild);
   }
+  videoElement.pause();
 }
 
 function selectAnswer(e) {
   const selectedBtn = e.target;
   const isCorrect = selectedBtn.dataset.correct === 'true';
+
+  playClickSound();
+
   if (isCorrect) {
     selectedBtn.classList.add('correct');
     score++;
@@ -145,7 +161,14 @@ function handleNextButton() {
   }
 }
 
+function playClickSound() {
+  const audio = new Audio('click.wav');
+  audio.volume = 0.3;
+  audio.play();
+}
+
 nextButton.addEventListener('click', () => {
+  playClickSound();
   if (currentQuestionIndex < questions.length) {
     handleNextButton();
   } else {
