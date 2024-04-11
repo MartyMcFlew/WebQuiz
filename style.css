@@ -45,6 +45,7 @@ video{
 }
 
 .quiz{
+    position: relative; /* added */
     padding: 20px 0;
 }
 
@@ -114,4 +115,14 @@ video{
     /* width: 6%; */
     max-width: 60px;
     filter: drop-shadow(0px 0px 0px #000000);
+}
+
+#bunny{
+    position: absolute;
+    top: 0%;
+    right: -19%;
+    width: 100px;
+    filter: drop-shadow(0px 0px 0px #000000);
+    z-index: -1;
+    transform: rotate(38deg);
 }
